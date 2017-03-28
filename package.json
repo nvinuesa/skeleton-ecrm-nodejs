@@ -1,0 +1,29 @@
+{
+  "name": "skeleton-ecrm-nodejs",
+  "version": "0.1.0",
+  "description": "Customer Relationship Management module skeleton in NodeJS",
+  "main": "app.js",
+  "scripts": {
+    "start": "node ./bin/www",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/underscorenico/skeleton-ecrm-nodejs.git"
+  },
+  "author": "Nicolas Vinuesa",
+  "license": "MIT ",
+  "bugs": {
+    "url": "https://github.com/underscorenico/skeleton-ecrm-nodejs/issues"
+  },
+  "homepage": "https://github.com/underscorenico/skeleton-ecrm-nodejs#readme",
+  "dependencies": {
+    "async": "^2.2.0",
+    "body-parser": "^1.17.1",
+    "debug": "^2.6.3",
+    "express": "^4.15.2",
+    "fs": "0.0.1-security",
+    "mongoose": "^4.9.2",
+    "morgan": "^1.8.1"
+  }
+}
