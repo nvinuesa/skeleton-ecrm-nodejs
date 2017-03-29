@@ -1,25 +1,37 @@
-// sign with default (HMAC SHA256)
-const jwt = require('jsonwebtoken');
-
-// sign with RSA SHA256
-const token = jwt.sign({ foo: 'bar' }, 'sdf', { algorithm: 'HS512'});
+const SessionService = require('./session-service');
 
 function requestValidation(req) {
 
     // Validate the profile received in the body of the request
-    req.checkBody('name', 'Profile\'s name can not be empty').notEmpty();
+    req.checkBody('password', 'Password can not be empty').notEmpty();
     req.checkBody('email', 'Profile\'s email can not be empty').notEmpty();
-    req.checkBody('email', 'Profile\'s email is incorrect').isEmail();
-    req.sanitize('name').escape();
+    req.sanitize('password').escape();
     req.sanitize('email').escape();
-    req.sanitize('name').trim();
+    req.sanitize('password').trim();
     req.sanitize('email').trim();
 }
 
-exports.session_create = function (req, res, next) {
-    res.json(token);
+
+exports.login = function (req, res, next) {
+    requestValidation(req);
+    const err = req.validationErrors();
+    // Check if there are any validation errors in the received profile, else save it
+    if (err) {
+        return next(err);
+    } else {
+        const email = req.body.email;
+        const password = req.body.password;
+        SessionService.login(email, password, (err, token) => {
+            if (err) {
+                return next(err);
+            }
+            res.json({
+                token: token
+            })
+        })
+    }
 };
 
-exports.session_get = function (req, res, next) {
+exports.getSession = function (req, res, next) {
     res.json(token);
 };

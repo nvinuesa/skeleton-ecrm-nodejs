@@ -6,6 +6,7 @@ module.exports = {
         level: 'dev'
     },
     jwt: {
-        secret: 'secret'
+        secret: 'secret',
+        expiration: 1440 // 24hs = 1440 min
     }
 };

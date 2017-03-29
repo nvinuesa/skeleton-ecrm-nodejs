@@ -1,15 +1,17 @@
 const express = require('express');
 const router = express.Router();
 
-const profile_controller = require('./profile-controller');
+const profileController = require('./profile-controller');
 
 // Create profile
-router.post('/profiles', profile_controller.profile_create);
-// Get profiles
-router.get('/profiles/:id', profile_controller.profile_get);
+router.post('/profiles', profileController.createProfile);
+// Get profile
+router.get('/profiles/:id', profileController.getProfile);
+// Get all profiles
+router.get('/profiles', profileController.getAllProfiles);
 // Update profile
-router.put('/profiles/:id', profile_controller.profile_update);
+router.put('/profiles/:id', profileController.updateProfile);
 // Delete profile
-router.delete('/profiles/:id', profile_controller.profile_delete);
+router.delete('/profiles/:id', profileController.deleteProfile);
 
 module.exports = router;
