@@ -8,7 +8,8 @@ const name = require('./package.json').name;
 const version = require('./package.json').version;
 
 const logger = require('morgan');
-var bodyParser = require('body-parser');
+const bodyParser = require('body-parser');
+const expressValidator = require('express-validator');
 
 // MongoDB datasource
 const mongo = require('./config/' + env + '.js').mongo;
@@ -18,30 +19,43 @@ const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
 // Main Express app
-var app = express();
+const app = express();
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
+app.use(expressValidator());
 // Routes
 const routes = [
-        './profile/profile'
-    ].forEach((module) => app.use(require(module + '-routes')));
+    './profile/profile'
+].forEach((module) => app.use(require(module + '-routes')));
 
 app.use(function (req, res, next) {
-    var err = new Error('Not Found');
+    const err = new Error('Not Found');
     err.status = 404;
     next(err);
 });
 
-app.use(function (err, req, res, next) {
+// development error handler
+// will print stacktrace
+if (app.get('env') === 'development') {
+    app.use((err, req, res, next) => {
+        console.log(err);
+        res.status(err.status || 500);
+        res.json({
+            code: err.message,
+            error: err
+        });
+    });
+}
 
-    res.locals.message = err.message;
-    res.locals.error = req.app.get('env') === 'development' ? err : {};
-
-    // render the error page
+// production error handler
+// no stacktraces leaked to user
+app.use((err, req, res, next) => {
     res.status(err.status || 500);
-    res.send('Server error!');
+    res.json({
+        code: err.message,
+        error: {}
+    });
 });
 
 module.exports = app;
-
