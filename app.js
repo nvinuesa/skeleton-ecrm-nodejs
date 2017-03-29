@@ -26,7 +26,8 @@ app.use(bodyParser.urlencoded({extended: false}));
 app.use(expressValidator());
 // Routes
 const routes = [
-    './profile/profile'
+    './profile/profile',
+    './session/session'
 ].forEach((module) => app.use(require(module + '-routes')));
 
 app.use(function (req, res, next) {
