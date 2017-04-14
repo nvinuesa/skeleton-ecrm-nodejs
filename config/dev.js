@@ -7,6 +7,6 @@ module.exports = {
     },
     jwt: {
         secret: 'secret',
-        expiration: 1440 // 24hs = 1440 min
+        expiration: 86400 // 24hs = 86400 sec
     }
 };
