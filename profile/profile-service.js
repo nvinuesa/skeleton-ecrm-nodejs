@@ -58,7 +58,7 @@ exports.create = function (profile, next) {
         function (err) {
             return next(err);
         }
-    )
+    );
 };
 
 exports.get = function (id, next) {
@@ -95,6 +95,26 @@ exports.getByEmail = function (email, next) {
                 }
                 // Successful, retrieve profile (with null error)
                 return next(null, profile);
+            });
+    } else {
+        return next(invalidEmail(email));
+    }
+};
+
+exports.getPasswordByEmail = function (email, next) {
+
+    // Validate the request's profile email
+    if (validator.isEmail(email)) {
+        Profile.findOne({email: email})
+            .exec((err, profile) => {
+                if (err) {
+                    return next(err);
+                }
+                if (!profile) {
+                    return next(profileNotFound(email));
+                }
+                // Successful, retrieve profile (with null error)
+                return next(null, profile.password);
             });
     } else {
         return next(invalidEmail(email));

@@ -1,5 +1,6 @@
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
+const async = require('async');
 
 const env = module.exports.env = process.env.NODE_ENV || 'dev';
 const conf = require('../config/' + env + '.js');
@@ -17,8 +18,9 @@ function generateToken(session, next) {
 
 function checkPassword(profile, password, next) {
 
-    if (profile.password) {
-        bcrypt.compare(password, user.password, (err, res) => {
+    let encryptedPassword = ProfileService.getPasswordByEmail(profile.email, next);
+    if (encryptedPassword) {
+        bcrypt.compare(password, encryptedPassword, (err, res) => {
             if (err) {
                 return next(err);
             }
@@ -29,16 +31,29 @@ function checkPassword(profile, password, next) {
 
 exports.login = function (email, password, next) {
 
-    ProfileService.getByEmail(email, (err, profile) => {
-        if (err) {
+    async.waterfall([
+            function (callback) {
+                ProfileService.getByEmail(email, callback);
+            },
+            function (profile, callback) {
+                callback = {
+                    profile, callback
+                };
+                checkPassword(profile, password, callback);
+            },
+            function (profile, checkPassword, callback) {
+                console.log(checkPassword)
+                let session = {
+                    name: profile.name,
+                    email: profile.email
+                };
+                generateToken(session, callback);
+            }
+        ],
+        function (err) {
             return next(err);
         }
-        let session = {
-            name: profile.name,
-            email: profile.email
-        };
-        generateToken(session, next);
-    })
+    );
 };
 
 exports.logout = function (username, next) {
