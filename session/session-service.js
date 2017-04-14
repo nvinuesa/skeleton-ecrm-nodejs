@@ -6,20 +6,8 @@ const conf = require('../config/' + env + '.js');
 
 const ProfileService = require('../profile/profile-service');
 
-function requestValidation(req) {
-
-    // Validate the profile received in the body of the request
-    req.checkBody('name', 'Profile\'s name can not be empty').notEmpty();
-    req.checkBody('email', 'Profile\'s email can not be empty').notEmpty();
-    req.checkBody('email', 'Profile\'s email is incorrect').isEmail();
-    req.sanitize('name').escape();
-    req.sanitize('email').escape();
-    req.sanitize('name').trim();
-    req.sanitize('email').trim();
-}
-
 function generateToken(session, next) {
-    jwt.sign(session, conf.jwt.secret, {expiresInMinutes: conf.jwt.expiration}, (err, token) => {
+    jwt.sign(session, conf.jwt.secret, {expiresIn: conf.jwt.expiration}, (err, token) => {
         if (err) {
             return next(err);
         }
@@ -45,7 +33,11 @@ exports.login = function (email, password, next) {
         if (err) {
             return next(err);
         }
-        generateToken(profile, next);
+        let session = {
+            name: profile.name,
+            email: profile.email
+        };
+        generateToken(session, next);
     })
 };
 

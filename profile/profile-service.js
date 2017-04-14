@@ -85,7 +85,7 @@ exports.getByEmail = function (email, next) {
 
     // Validate the request's profile email
     if (validator.isEmail(email)) {
-        Profile.find({email: email})
+        Profile.findOne({email: email})
             .exec((err, profile) => {
                 if (err) {
                     return next(err);
