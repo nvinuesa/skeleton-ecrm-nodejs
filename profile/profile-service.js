@@ -101,11 +101,12 @@ exports.getByEmail = function (email, next) {
     }
 };
 
-exports.getPasswordByEmail = function (email, next) {
+exports.getWithPasswordByEmail = function (email, next) {
 
     // Validate the request's profile email
     if (validator.isEmail(email)) {
         Profile.findOne({email: email})
+            .select('+password')
             .exec((err, profile) => {
                 if (err) {
                     return next(err);
@@ -114,7 +115,7 @@ exports.getPasswordByEmail = function (email, next) {
                     return next(profileNotFound(email));
                 }
                 // Successful, retrieve profile (with null error)
-                return next(null, profile.password);
+                return next(null, profile);
             });
     } else {
         return next(invalidEmail(email));

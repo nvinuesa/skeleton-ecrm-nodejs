@@ -18,13 +18,13 @@ function generateToken(session, next) {
 
 function checkPassword(profile, password, next) {
 
-    let encryptedPassword = ProfileService.getPasswordByEmail(profile.email, next);
+    let encryptedPassword = profile.password;
     if (encryptedPassword) {
         bcrypt.compare(password, encryptedPassword, (err, res) => {
             if (err) {
                 return next(err);
             }
-            return next(null, res);
+            return next(null, profile, res);
         });
     }
 }
@@ -33,16 +33,17 @@ exports.login = function (email, password, next) {
 
     async.waterfall([
             function (callback) {
-                ProfileService.getByEmail(email, callback);
+                ProfileService.getWithPasswordByEmail(email, callback);
             },
             function (profile, callback) {
-                callback = {
-                    profile, callback
-                };
                 checkPassword(profile, password, callback);
             },
-            function (profile, checkPassword, callback) {
-                console.log(checkPassword)
+            function (profile, res, callback) {
+                if (!res) {
+                    const err = new Error('Incorrect password for profile with email ' + profile.email);
+                    err.status = 400;
+                    return callback(err);
+                }
                 let session = {
                     name: profile.name,
                     email: profile.email
@@ -50,8 +51,8 @@ exports.login = function (email, password, next) {
                 generateToken(session, callback);
             }
         ],
-        function (err) {
-            return next(err);
+        function (err, token) {
+            return next(err, token);
         }
     );
 };

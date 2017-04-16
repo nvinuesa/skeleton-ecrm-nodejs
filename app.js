@@ -4,12 +4,14 @@ const async = require('async');
 const express = require('express');
 
 const env = module.exports.env = process.env.NODE_ENV || 'dev';
+const conf = require('./config/' + env + '.js');
 const name = require('./package.json').name;
 const version = require('./package.json').version;
 
 const logger = require('morgan');
 const bodyParser = require('body-parser');
 const expressValidator = require('express-validator');
+const expressJWT = require('express-jwt');
 
 // MongoDB datasource
 const mongo = require('./config/' + env + '.js').mongo;
@@ -24,6 +26,7 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(expressValidator());
+app.use(expressJWT({secret: conf.jwt.secret}).unless({path: '/login'}));
 // Routes
 const routes = [
     './profile/profile',
