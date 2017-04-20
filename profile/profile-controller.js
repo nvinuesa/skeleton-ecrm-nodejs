@@ -48,8 +48,6 @@ exports.getProfile = function (req, res, next) {
 
 exports.getAllProfiles = function (req, res, next) {
 
-	const id = req.params.id;
-	// Validate the request's profile id (must be a valid MongoDB's ObjectID)
 	ProfileService.getAll((err, profiles) => {
 		if (err) {
 			return next(err);
