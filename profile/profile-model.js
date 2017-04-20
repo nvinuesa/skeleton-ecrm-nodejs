@@ -6,39 +6,39 @@ const Schema = mongoose.Schema;
 const SALT_WORK_FACTOR = 10;
 
 const ProfileSchema = Schema(
-    {
-        name: {type: String, required: true},
-        email: {type: String, required: true},
-        password: {type: String, select: false}
-    }
+	{
+		name: {type: String, required: true},
+		email: {type: String, required: true},
+		password: {type: String, select: false}
+	}
 );
 
 // Virtual for profile's URL
 ProfileSchema
-    .virtual('url')
-    .get(function () {
-        return '/profiles/' + this._id;
-    });
+	.virtual('url')
+	.get(function () {
+		return '/profiles/' + this._id;
+	});
 
 // Pre save for the profile schema (encrypt user password)
 ProfileSchema
-    .pre('save', function (next) {
-        const user = this;
-        if (!user.password) return next();
+	.pre('save', function (next) {
+		const user = this;
+		if (!user.password) return next();
 
-        bcrypt.genSalt(SALT_WORK_FACTOR, function (err, salt) {
-            if (err) {
-                return next(err);
-            }
-            bcrypt.hash(user.password, salt, function (err, hash) {
-                if (err) {
-                    return next(err);
-                }
-                user.password = hash;
-                next();
-            });
-        });
-    });
+		bcrypt.genSalt(SALT_WORK_FACTOR, function (err, salt) {
+			if (err) {
+				return next(err);
+			}
+			bcrypt.hash(user.password, salt, function (err, hash) {
+				if (err) {
+					return next(err);
+				}
+				user.password = hash;
+				next();
+			});
+		});
+	});
 
 
 //Export model
