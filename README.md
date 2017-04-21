@@ -14,6 +14,11 @@ The start script will run the server (using nodemon) on port 3000 (http://localh
 This skeleton provides an API for CRM (Customer Relationship Management). CRM is a central module in every e-commerce application since it manages users (buyers / sellers), organizations, sessions, etc.
 <br>
 The routes provide a very simple profile CRUD as well as the session management (login and logout).
+<br>
+<br>
+**Note**: For a working web app skeleton in Angular 2 check out [this repo][angular2].
+
+[angular2]: https://github.com/JunkyDeLuxe/angular4-starter
 
 ### Profiles
 The profile API contains 5 routes:
