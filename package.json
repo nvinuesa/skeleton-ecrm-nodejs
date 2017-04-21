@@ -6,7 +6,7 @@
   "scripts": {
     "start": "nodemon ./bin/www",
     "test": "npm run test-unit",
-    "test-unit": "NODE_ENV=test mocha './**/*spec.js'"
+    "test-unit": "NODE_ENV=dev mocha './**/*spec.js'"
   },
   "repository": {
     "type": "git",
