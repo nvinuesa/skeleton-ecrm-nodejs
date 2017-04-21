@@ -1,4 +1,5 @@
 [![Build Status](https://travis-ci.org/underscorenico/skeleton-ecrm-nodejs.svg?branch=master)](https://travis-ci.org/underscorenico/skeleton-ecrm-nodejs)
+[![MIT licensed](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/underscorenico/skeleton-ecrm-nodejs/master/LICENSE.txt)
 
 # skeleton-ecrm-nodejs
 
