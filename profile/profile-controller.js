@@ -25,7 +25,7 @@ exports.createProfile = function (req, res, next) {
 			email: req.body.email,
 			password: req.body.password
 		});
-		ProfileService.create(profile, (err) => {
+		ProfileService.create(profile, (err, profile) => {
 			if (err) {
 				return next(err);
 			}

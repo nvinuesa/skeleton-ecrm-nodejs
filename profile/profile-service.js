@@ -50,13 +50,13 @@ exports.create = function (profile, next) {
 				callback();
 			},
 			function (callback) {
-				profile.save((err) => {
-					callback(err)
+				profile.save((err, profile) => {
+					callback(err, profile)
 				})
 			}
 		],
-		function (err) {
-			return next(err);
+		function (err, profile) {
+			return next(err, profile);
 		}
 	);
 };

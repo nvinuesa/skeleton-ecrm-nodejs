@@ -54,7 +54,8 @@ exports.login = function (email, password, next) {
 				}
 				let session = {
 					name: profile.name,
-					email: profile.email
+					email: profile.email,
+					id: profile._id
 				};
 				generateToken(session, callback);
 			}
