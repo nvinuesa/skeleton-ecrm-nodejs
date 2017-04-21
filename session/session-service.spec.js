@@ -19,15 +19,15 @@ describe('IsTokenRevoked', function () {
 		});
 	});
 
-	it('should return false if the token is revoked in Redis', function (done) {
-		const SessionService = proxyquire('./session-service', {'../config/dev.js': confStub});
-
-		const email = "foo@bar.com";
-		const tokenId = "validToken";
-		SessionService.isTokenRevoked(email, tokenId, (err, bool) => {
-			expect(err).to.be.null;
-			expect(bool).to.be.false;
-			done();
-		});
-	});
+	// it('should return false if the token is revoked in Redis', function (done) {
+	// 	const SessionService = proxyquire('./session-service', {'../config/dev.js': confStub});
+    //
+	// 	const email = "foo@bar.com";
+	// 	const tokenId = "validToken";
+	// 	SessionService.isTokenRevoked(email, tokenId, (err, bool) => {
+	// 		expect(err).to.be.null;
+	// 		expect(bool).to.be.false;
+	// 		done();
+	// 	});
+	// });
 });
