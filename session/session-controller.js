@@ -39,7 +39,7 @@ exports.isRevokedCallback = function (req, payload, done) {
 	const issuer = payload.email;
 	const tokenId = payload.jti;
 
-	SessionService.isTokenRevoked(issuer, tokenId, function (err, revoked) {
+	SessionService.isTokenRevoked(issuer, tokenId, (err, revoked) => {
 		if (err) {
 			return done(err);
 		}

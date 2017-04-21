@@ -1,12 +1,7 @@
-const fs = require('fs');
-
-const async = require('async');
 const express = require('express');
 
 const env = module.exports.env = process.env.NODE_ENV || 'dev';
 const conf = require('./config/' + env + '.js');
-const name = require('./package.json').name;
-const version = require('./package.json').version;
 
 const logger = require('morgan');
 const bodyParser = require('body-parser');

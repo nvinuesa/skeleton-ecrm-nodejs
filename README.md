@@ -1,5 +1,9 @@
 # skeleton-ecrm-nodejs
 Customer Relationship Management module skeleton in NodeJS
+<br>
+Visit [https://underscorenico.github.io/blog/2017/04/21/nodejs-ecrm-jwt/][blog] for a more detailed tutorial.
+
+[blog]: https://underscorenico.github.io/blog/2017/04/21/nodejs-ecrm-jwt/
 
 ## Usage
 Clone the repo, install and launch:

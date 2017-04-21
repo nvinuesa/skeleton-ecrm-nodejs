@@ -12,7 +12,7 @@ describe('IsTokenRevoked', function () {
 		const SessionService = require('./session-service');
 		const email = "foo@bar.com";
 		const tokenId = "validToken";
-		SessionService.isTokenRevoked(email, tokenId, function (err, bool) {
+		SessionService.isTokenRevoked(email, tokenId, (err, bool) => {
 			expect(err).to.be.null;
 			expect(bool).to.be.false;
 			done();
@@ -24,7 +24,7 @@ describe('IsTokenRevoked', function () {
 
 		const email = "foo@bar.com";
 		const tokenId = "validToken";
-		SessionService.isTokenRevoked(email, tokenId, function (err, bool) {
+		SessionService.isTokenRevoked(email, tokenId, (err, bool) => {
 			expect(err).to.be.null;
 			expect(bool).to.be.false;
 			done();

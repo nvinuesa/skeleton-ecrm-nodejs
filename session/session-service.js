@@ -75,7 +75,7 @@ exports.isTokenRevoked = function (email, tokenId, callback) {
 		const host = conf.redis.host || 'localhost';
 
 		const client = redis.createClient(port, host);
-		client.get(email, function (err, reply) {
+		client.get(email, (err, reply) => {
 			callback(err, reply === tokenId);
 		})
 	} else {
@@ -95,7 +95,7 @@ exports.logout = function (email, tokenId, next) {
 		const host = conf.redis.host || 'localhost';
 
 		const client = redis.createClient(port, host);
-		client.set(email, tokenId, function (err) {
+		client.set(email, tokenId, (err) => {
 			next(err);
 		})
 	} else {
