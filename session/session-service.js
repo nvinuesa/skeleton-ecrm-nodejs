@@ -13,7 +13,7 @@ const cacheOptions = {
 	max: 1024 * 1024 * 5,
 	maxAge: conf.jwt.expiration * 1000 // maximum age in ms
 };
-memoryStore = LRU(cacheOptions);
+const memoryStore = LRU(cacheOptions);
 
 function generateToken(session, next) {
 	jwt.sign(session, conf.jwt.secret, {expiresIn: conf.jwt.expiration, jwtid: uuid.v4()}, (err, token) => {
