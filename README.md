@@ -1,4 +1,7 @@
+[![Build Status](https://travis-ci.org/underscorenico/skeleton-ecrm-nodejs.svg?branch=master)](https://travis-ci.org/underscorenico/skeleton-ecrm-nodejs)
+
 # skeleton-ecrm-nodejs
+
 Customer Relationship Management module skeleton in NodeJS
 <br>
 Visit [https://underscorenico.github.io/blog/2017/04/21/nodejs-ecrm-jwt/][blog] for a more detailed tutorial.
