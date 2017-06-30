@@ -24,7 +24,10 @@ app.use(expressValidator());
 app.use(expressJWT({
 	secret: conf.jwt.secret,
 	isRevoked: require('./session/session-controller').isRevokedCallback
-}).unless({path: '/login'}));
+}).unless({path: [
+	'/login',
+	{ url: '/profiles', methods: ['POST']  }
+]}));
 // Routes
 const routes = [
 	'./profile/profile',
